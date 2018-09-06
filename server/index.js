@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
 
-// API file for interacting with MongoDB
+// API file for interacting with sql server
 const api = require("./routes/api");
 
 /**
