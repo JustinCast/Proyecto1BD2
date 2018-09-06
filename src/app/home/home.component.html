@@ -1,3 +1,10 @@
-<ul>
+<ul *ngIf="_tableService.tables.length !== 0; else progressbar">
   <li class="card table text-center" *ngFor="let t of _tableService.tables">{{t.name}}</li>
 </ul>
+
+<ng-template #progressbar>
+  <div id="loading" class="container">
+    <h2 class="text-center text-primary">Loading</h2>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</ng-template>

@@ -10,6 +10,7 @@ import { ROUTES } from './app.routing';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateProcedureComponent } from './create-procedure/create-procedure.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,10 +21,11 @@ import { CreateProcedureComponent } from './create-procedure/create-procedure.co
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     NgbModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
-    BrowserAnimationsModule
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
