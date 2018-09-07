@@ -15,7 +15,6 @@ export class TablesService {
     this._http.get<any>(`http://localhost:3000/api/v1/getTableNames`).subscribe(
       data => {
         this.tables = new List<any>(data);
-        console.log(data)
         this.extractTables();
       },
       (err: HttpErrorResponse) => {
@@ -37,14 +36,13 @@ export class TablesService {
 
   extractTables() {
     this.tables = this.tables.GroupBy(t => t.TABLE_NAME, t => t.COLUMN_NAME);
-    console.log(this.tables)
     for (var key in this.tables) {
       if (this.tables.hasOwnProperty(key)) {
-        let table: Table = new Table(key)
+        let table: Table = new Table(key);
         this.tables[key].forEach(element => {
-          table.COLUMN_NAME.unshift(element)
+          table.COLUMN_NAME.unshift(element);
         });
-        this.extractedTables.unshift(table)
+        this.extractedTables.unshift(table);
       }
     }
   }
