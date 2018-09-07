@@ -1,21 +1,24 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Table } from "../models/Table";
+import { List } from 'linqts';
 
 @Injectable({
   providedIn: "root"
 })
 export class TablesService {
-  tables: Array<any> = []
+  tables: List<any>;
+  extractedTables: Array<Table> = []
   constructor(private _http: HttpClient) {}
 
   getTableNames() {
     this._http
-      .get<Array<any>>(
-        `http://localhost:3000/api/v1/getTableNames`
-      )
+      .get<any>(`http://localhost:3000/api/v1/getTableNames`)
       .subscribe(
         data => {
-          this.tables = data
+          this.tables = new List<any>(data);
+          console.log(data)
+          this.extractTables();
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -32,5 +35,9 @@ export class TablesService {
           }
         }
       );
+  }
+
+  extractTables() {
+   console.log(this.tables.GroupBy(t => (t.TABLE_NAME), t => (t.COLUMN_NAME)))
   }
 }
