@@ -1,6 +1,8 @@
 export class Table {
-    constructor(
-        public tableName: string,
-        public columnNames: Array<string>
-    ){}
+  COLUMN_NAME: Array<string> = [];
+  constructor(public TABLE_NAME?: string) {}
+
+  public setColumnName(column: string): void {
+    this.COLUMN_NAME.unshift(column);
+  }
 }

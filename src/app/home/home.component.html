@@ -1,5 +1,11 @@
-<!-- <ul *ngIf="_tableService.tables !== undefined; else progressbar">
-  <li class="card table text-center" *ngFor="let t of _tableService.tables">{{t.name}}</li>
+<ul style="width: 100%" *ngIf="_tableService.tables !== undefined; else progressbar">
+  <li class="card table shadow-sm p-3 mb-5 bg-white rounded text-center" *ngFor="let t of _tableService.extractedTables; let index = index">
+    {{t.TABLE_NAME}}
+    <hr>
+    <ul *ngFor="let c of t.COLUMN_NAME">
+      <li class="text-left text-secondary">{{c}}</li>
+    </ul>
+  </li>
 </ul>
 
 <ng-template #progressbar>
@@ -7,4 +13,4 @@
     <h2 class="text-center text-primary">Loading</h2>
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>
-</ng-template> -->
+</ng-template>
