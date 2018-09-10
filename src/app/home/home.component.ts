@@ -1,16 +1,21 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { TablesService } from "../services/tables.service";
 import { ExecutionOptionsDialogService } from "./execution-dialog-options/execution-options-dialog.service";
-import { MatCheckbox } from "@angular/material";
+import { MatCheckbox, MatCheckboxChange } from "@angular/material";
+import { Table } from "../models/Table";
+import { speedDialFabAnimations } from "./speed-dial-fab-animations";
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  providers: [ExecutionOptionsDialogService]
+  providers: [ExecutionOptionsDialogService],
+  animations: speedDialFabAnimations
 })
 export class HomeComponent implements OnInit {
-  //@ViewChild('myCheckbox') private myCheckbox: MatCheckbox;
+  disabled: boolean = true;
+  private selectedTables: Array<Table> = [];
+  private selectedCheckboxes: Array<MatCheckbox> = [];
   constructor(
     private _tableService: TablesService,
     public execDialog: ExecutionOptionsDialogService
@@ -20,13 +25,41 @@ export class HomeComponent implements OnInit {
     this._tableService.getTableNames();
   }
 
-  openExecDialog(check: MatCheckbox) {
-    this.execDialog
-    .confirm()
-    .subscribe(result =>{
-      check.checked = !check.checked
-      if(result) {
+  selectOrDeselectTable(check: MatCheckbox, index: number) {
+    if (!check.checked) {
+      this.selectedTables.unshift(this._tableService.extractedTables[index]);
+      this.selectedCheckboxes.unshift(check);
+    } else {
+      this.selectedTables.splice(
+        this.selectedTables.findIndex(
+          t => t === this._tableService.extractedTables[index]
+        ),
+        1
+      );
+      this.selectedCheckboxes.splice(
+        this.selectedCheckboxes.findIndex(c => c === check),
+        1
+      );
+    }
+    console.log(this.selectedCheckboxes)
+    this.manageDisabled();
+  }
+
+  manageDisabled(): void {
+    if (this.selectedTables.length !== 0) this.disabled = false;
+    else this.disabled = true;
+  }
+
+  openExecDialog() {
+    this.execDialog.confirm().subscribe(result => {
+      if (result) {
       }
-    })
+      this.deSelectChecboxes();
+      this.manageDisabled();
+    });
+  }
+
+  deSelectChecboxes() {
+    this.selectedCheckboxes.forEach(c => c.checked = false);
   }
 }
