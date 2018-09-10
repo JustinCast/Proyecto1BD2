@@ -11,13 +11,15 @@ import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateProcedureComponent } from './create-procedure/create-procedure.component';
 import { SharedModule } from './shared/shared.module';
+import { ExecutionDialogComponent } from './home/execution-dialog-options/execution-dialog/execution-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    CreateProcedureComponent
+    CreateProcedureComponent,
+    ExecutionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +28,9 @@ import { SharedModule } from './shared/shared.module';
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
     SharedModule
+  ],
+  entryComponents: [
+    ExecutionDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
