@@ -9,7 +9,7 @@ export class ExecutionOptionsDialogService {
   public confirm(): Observable<boolean> {
     let dialogRef: MatDialogRef<ExecutionDialogComponent>;
     dialogRef = this.dialog.open(ExecutionDialogComponent, {
-      width: "250px",
+      width: "35%",
       data: { name: "Ups!" }
     });
 

@@ -1,8 +1,13 @@
 <div style="margin: auto; text-align: center">
-  Título
-  <p>Mensaje</p>
-  <button mat-button color="warn" (click)="dialogRef.close(false)">Cancelar</button>
-  <button mat-button color="primary" (click)="dialogRef.close(true)">
-      Aceptar
-  </button>
+  <div class="container text-left">
+    <mat-radio-group>
+      <h2 class="text-left text-secondary">Generation Options</h2>
+      <hr>
+      <mat-radio-button value="1">Generate Code</mat-radio-button><br>
+      <mat-radio-button value="2">Generate Code & Execute</mat-radio-button><br>
+    </mat-radio-group> 
+  </div>
+  <hr>
+  <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>
+  <button class="text-primary" id="done" mat-raised-button (click)="dialogRef.close(true)">Done</button>
 </div>
