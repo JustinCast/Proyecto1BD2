@@ -2,7 +2,7 @@
   <li class="card table shadow-sm p-3 mb-3 bg-white rounded text-center" *ngFor="let t of _tableService.extractedTables; let index = index">
     <ul id="header-ul">
       <li class="header-li text-primary"><h3>{{t.TABLE_NAME}}</h3></li>
-      <li style="margin-left: 50%" class="header-li"><mat-checkbox (click)="openExecDialog()"></mat-checkbox></li>
+      <li style="margin-left: 50%" class="header-li"><mat-checkbox #check (click)="openExecDialog(check)"></mat-checkbox></li>
     </ul>
     <hr>
     <ul *ngFor="let c of t.COLUMN_NAME">

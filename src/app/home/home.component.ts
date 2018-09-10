@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { TablesService } from "../services/tables.service";
 import { ExecutionOptionsDialogService } from "./execution-dialog-options/execution-options-dialog.service";
+import { MatCheckbox } from "@angular/material";
 
 @Component({
   selector: "app-home",
@@ -9,6 +10,7 @@ import { ExecutionOptionsDialogService } from "./execution-dialog-options/execut
   providers: [ExecutionOptionsDialogService]
 })
 export class HomeComponent implements OnInit {
+  //@ViewChild('myCheckbox') private myCheckbox: MatCheckbox;
   constructor(
     private _tableService: TablesService,
     public execDialog: ExecutionOptionsDialogService
@@ -18,11 +20,11 @@ export class HomeComponent implements OnInit {
     this._tableService.getTableNames();
   }
 
-  openExecDialog() {
+  openExecDialog(check: MatCheckbox) {
     this.execDialog
     .confirm()
     .subscribe(result =>{
-      console.log(result)
+      check.checked = !check.checked
       if(result) {
       }
     })

@@ -4,7 +4,10 @@ import {
   MatProgressBarModule,
   MatButtonModule,
   MatCheckboxModule,
-  MatDialogModule
+  MatDialogModule,
+  MatListModule,
+  MatRadioModule,
+  MatInputModule
  } from "@angular/material";
 @NgModule({
   imports: [
@@ -12,13 +15,17 @@ import {
     MatProgressBarModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule,
+    MatRadioModule
   ],
   exports: [
     MatProgressBarModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule,
+    MatRadioModule
   ],
   declarations: []
 })
