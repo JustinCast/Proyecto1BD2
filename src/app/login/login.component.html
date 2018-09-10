@@ -1,14 +1,21 @@
-<form class="card">
-  <h1 style="margin: auto">Login</h1>
-  <div style="margin: auto">
-      <input matInput  placeholder="IP">
-    <hr>
-      <input matInput type="text" placeholder="Base de datos">
-    <hr>
-      <input matInput type="text" placeholder="Usuario">
-    <hr>
-      <input matInput type="text" placeholder="Clave">
-    <hr>
-    <button style="margin: auto">Ingresar</button>
-  </div>
-</form>
+<form class="card container" style="height: 84%; width: 27%">
+    <h1 style="margin: auto; margin-top: 20%;">Login</h1>
+    <div class="container">
+      <mat-form-field class="container">
+        <input matInput placeholder="Server" >
+      </mat-form-field>
+      <mat-form-field class="container">
+          <input matInput type="number" placeholder="Port">
+        </mat-form-field>
+      <mat-form-field class="container">
+          <input matInput placeholder="Database">
+        </mat-form-field>
+      <mat-form-field class="container">
+        <input matInput placeholder="User">
+      </mat-form-field>
+      <mat-form-field class="container">
+        <input matInput placeholder="Password">
+      </mat-form-field>
+    </div>
+    <button mat-button style="margin: auto;margin-bottom: 20%">Enter</button>
+  </form>
