@@ -14,8 +14,7 @@ export class TablesService {
   getTableNames() {
     this._http.get<any>(`http://localhost:3000/api/v1/getTableNames`).subscribe(
       data => {
-        this.tables = new List<any>(data);
-        console.log('Datos del servidor: ', data);
+        this.tables = new List<Table>(data);
         this.extractTables();
       },
       (err: HttpErrorResponse) => {
@@ -46,6 +45,5 @@ export class TablesService {
         this.extractedTables.unshift(table);
       }
     }
-    console.log('Datos agrupados: ', this.extractedTables);
   }
 }
