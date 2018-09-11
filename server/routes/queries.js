@@ -33,7 +33,7 @@ async function createSchema(req, res, next) {
 async function getTableNames(req, res, next) {
   try {
     let pool = await sql.connect(config);
-    let result = await pool.request().query("Select TABLE_NAME,COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME != 'database_firewall_rules'");
+    let result = await pool.request().query("SELECT * FROM get_table_data");
     res.status(200).json(result.recordset);
     sql.close();
   } catch (err) {
