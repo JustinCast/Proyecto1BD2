@@ -3,12 +3,13 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatListOption } from '@angular/material'
 import { Table } from '../../../models/Table';
 import { SchemaService } from '../../../services/schema.service';
 import { Procedure } from '../../../models/Procedure';
+import { ProcService } from '../../../services/proc.service';
 
 @Component({
   selector: 'app-execution-dialog',
   templateUrl: './execution-dialog.component.html',
   styleUrls: ['./execution-dialog.component.scss'],
-  providers: [SchemaService]
+  providers: [SchemaService, ProcService]
 })
 export class ExecutionDialogComponent implements OnInit {
   proc: Procedure = {};
@@ -17,7 +18,8 @@ export class ExecutionDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ExecutionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public tables: Array<Table>,
-    public _schemaService: SchemaService
+    public _schemaService: SchemaService,
+    public _procService: ProcService
   ) {}
 
   ngOnInit() {
@@ -31,6 +33,20 @@ export class ExecutionDialogComponent implements OnInit {
   }
 
   submit() {
+    this.methods.forEach(m => {
+      switch(m) {
+        case 0:
+          this._procService.building.proc = 'Insert';
+          this._procService.building.state = true;
+          this._procService.genInsertProc(this.proc);
+          break;
+        case 1:
+          break;
+        case 2:
+          break;
+        default: break;
+      }
+    });
     this.reset();
   }
 

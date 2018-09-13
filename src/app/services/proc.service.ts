@@ -6,9 +6,10 @@ import { Procedure } from "../models/Procedure";
   providedIn: "root"
 })
 export class ProcService {
+  building = {proc: '', state: false}
   constructor(private _http: HttpClient) {}
 
-  createProc(proc: Procedure) {
+  genInsertProc(proc: Procedure) {
     this._http
       .post("http://localhost:3000/api/v1/genInsert", {
         prefix: proc.prefix,
@@ -18,6 +19,8 @@ export class ProcService {
       })
       .subscribe(
         success => {
+          this.building.proc = '';
+          this.building.state = false;
           console.log(success);
         },
         (err: HttpErrorResponse) => {
@@ -35,5 +38,9 @@ export class ProcService {
           }
         }
       );
+  }
+
+  genUpdateProc(proc: Procedure) {
+
   }
 }
