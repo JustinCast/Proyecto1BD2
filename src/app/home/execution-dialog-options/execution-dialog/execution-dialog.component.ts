@@ -8,7 +8,6 @@ import { Table } from '../../../models/Table';
   styleUrls: ['./execution-dialog.component.scss']
 })
 export class ExecutionDialogComponent implements OnInit {
-
   constructor(
     public dialogRef: MatDialogRef<ExecutionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public tables: Array<Table>

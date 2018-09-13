@@ -1,4 +1,4 @@
-<div style="margin: auto; text-align: center">
+<div id="main-dialog-container" style="overflow-y: scroll; margin: auto; text-align: center">
   <div class="container text-left">
     <mat-radio-group>
       <h2 class="text-left text-secondary">Generation Options</h2>
@@ -10,7 +10,7 @@
   <hr>
   <mat-selection-list>
     <h4 class="text-left text-info">Tables</h4>
-    <mat-list-option style="text-align: left" *ngFor="let t of tables">
+    <mat-list-option class="option-left" *ngFor="let t of tables">
       {{t.TABLE_NAME}}
     </mat-list-option>
   </mat-selection-list>
@@ -22,13 +22,13 @@
     <mat-form-field>
       <input matInput type="text" placeholder="Table Name">
     </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Operation">
-        <mat-option>Create Insert</mat-option>
-        <mat-option>Create Update</mat-option>
-        <mat-option>Create Delete</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <hr>
+    <mat-selection-list>
+      <h4 class="text-left text-info">Operations</h4>
+      <mat-list-option class="option-center">Create Insert</mat-list-option>
+      <mat-list-option class="option-center">Create Update</mat-list-option>
+      <mat-list-option class="option-center">Create Delete</mat-list-option>
+    </mat-selection-list>
   </form>
   <hr>
   <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>

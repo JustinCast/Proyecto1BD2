@@ -11,7 +11,7 @@ export class ExecutionOptionsDialogService {
     let dialogRef: MatDialogRef<ExecutionDialogComponent>;
     dialogRef = this.dialog.open(ExecutionDialogComponent, {
       width: "65%",
-      height: "50%",
+      height: "70%",
       data: selectedTables
     });
 
