@@ -7,19 +7,19 @@ import { HttpClientModule } from "@angular/common/http";
 import { HomeComponent } from './home/home.component';
 import { RouterModule } from "@angular/router";
 import { ROUTES } from './app.routing';
-import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateProcedureComponent } from './create-procedure/create-procedure.component';
 import { SharedModule } from './shared/shared.module';
 import { ExecutionDialogComponent } from './home/execution-dialog-options/execution-dialog/execution-dialog.component';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { LoginConnectionComponent } from './login-connection/login-connection.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
     CreateProcedureComponent,
-    ExecutionDialogComponent
+    ExecutionDialogComponent,
+    LoginConnectionComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +28,8 @@ import { FormsModule }   from '@angular/forms';
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
     SharedModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     ExecutionDialogComponent

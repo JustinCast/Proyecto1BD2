@@ -1,0 +1,21 @@
+<form [formGroup]="loginFG" (ngSubmit) = "onSubmit()" class="card container" style="height: 84%; width: 27%">
+  <h1 style="margin: auto; margin-top: 20%;">Login</h1>
+  <div class="form-group">
+    <mat-form-field class="container">
+      <input matInput [formControl]="loginFG.get('server')" placeholder="Server" >
+    </mat-form-field>
+    <mat-form-field class="container">
+        <input matInput [formControl]="loginFG.get('port')" placeholder="Port">
+      </mat-form-field>
+    <mat-form-field class="container">
+        <input matInput [formControl]="loginFG.get('database')" placeholder="Database">
+      </mat-form-field>
+    <mat-form-field class="container">
+      <input matInput [formControl]="loginFG.get('user')" placeholder="User">
+    </mat-form-field>
+    <mat-form-field class="container">
+      <input matInput [formControl]="loginFG.get('password')" type="password" placeholder="Password">
+    </mat-form-field>
+  </div>
+  <button mat-button [disabled]="!loginFG.valid" type="submit"  style="margin: auto;margin-bottom: 20%">Enter</button>
+</form>

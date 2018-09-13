@@ -8,6 +8,9 @@ import {
   MatInputModule,
   MatSelectModule
  } from "@angular/material";
+
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +19,8 @@ import {
     MatCheckboxModule,
     MatDialogModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    
   ],
   exports: [
     MatProgressBarModule,
@@ -25,6 +29,7 @@ import {
     MatDialogModule,
     MatInputModule,
     MatSelectModule
+
   ],
   declarations: []
 })
