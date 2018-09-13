@@ -9,8 +9,8 @@ sql.on("err", err => {
 async function getSchemas(req, res, next) {
   try {
     let pool = await sql.connect(config);
-    let result = await pool.request().query("SELECT name FROM sys.schemas");
-    res.status(200).json({ result: result.recordset });
+    let result = await pool.request().query("SELECT TABLE_SCHEMA FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA != 'sys' GROUP BY TABLE_SCHEMA");
+    res.status(200).json(result.recordset);
     sql.close();
   } catch (err) {
     console.log(err);
@@ -32,9 +32,10 @@ async function createSchema(req, res, next) {
 
 async function getTableNames(req, res, next) {
   try {
+    sql.close();
     let pool = await sql.connect(config);
-    let result = await pool.request().query("SELECT name FROM sys.Tables");
-    res.status(200).json({ resultado: result.recordset });
+    let result = await pool.request().query("SELECT * FROM get_table_data");
+    res.status(200).json(result.recordset);
     sql.close();
   } catch (err) {
     console.log(err);
@@ -45,12 +46,11 @@ async function getPeople(req, res, next) {
   try {
     let pool = await sql.connect(config);
     let tableName = req.params.tablename;
-    console.log(tableName)
     let schema = req.params.schema;
     let result = await pool
       .request()
       .query(`SELECT * FROM ${schema}.${tableName}`);
-    res.status(200).json({ people: result });
+    res.status(200).json({ people: result});
     sql.close();
   } catch (err) {
     console.log(err);
