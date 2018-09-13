@@ -31,6 +31,10 @@ export class ExecutionDialogComponent implements OnInit {
   }
 
   submit() {
+    this.reset();
+  }
+
+  reset() {
     this.tables.splice(this.tables.findIndex(t => t.TABLE_NAME === this.proc.table), 1);
     this.proc = {};
     console.log(this.options);

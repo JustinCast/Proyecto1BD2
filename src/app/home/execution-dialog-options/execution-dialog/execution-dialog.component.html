@@ -47,4 +47,10 @@
       Done
     </button>
   </form>
+  <ng-template #creatingProc>
+    <div id="loading" class="container">
+      <h4 class="text-center text-primary">Creating {{name}} proc...</h4>
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </div>
+  </ng-template>
 </div>
