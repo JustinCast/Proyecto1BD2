@@ -24,11 +24,14 @@ export class ExecutionDialogComponent implements OnInit {
   }
 
   tableRadioClick(index: number) {
-    this.proc.tableSchema = this.tables[index].TABLE_NAME;
+    this.proc.tableSchema = this.tables[index].TABLE_SCHEMA;
+    this.proc.table = this.tables[index].TABLE_NAME;
   }
 
   submit() {
     console.log(this.proc)
+    this.tables.splice(this.tables.findIndex(t => t.TABLE_NAME === this.proc.table), 1);
+    this.proc = {};
   }
 
 }
