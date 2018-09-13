@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateProcedureComponent } from './create-procedure/create-procedure.component';
 import { SharedModule } from './shared/shared.module';
 import { ExecutionDialogComponent } from './home/execution-dialog-options/execution-dialog/execution-dialog.component';
-
+import { FormsModule }   from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +27,8 @@ import { ExecutionDialogComponent } from './home/execution-dialog-options/execut
     NgbModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   entryComponents: [
     ExecutionDialogComponent
