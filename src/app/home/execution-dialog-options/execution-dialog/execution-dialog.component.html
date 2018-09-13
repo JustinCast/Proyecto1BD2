@@ -1,53 +1,55 @@
 <div id="main-dialog-container" style="overflow-y: scroll; margin: auto; text-align: center">
-  <div class="container text-left">
-    <mat-radio-group>
-      <h2 class="text-left text-secondary">Generation Options</h2>
+  <div *ngIf="!_procService.building.state; else creatingProc" class="container">
+    <div class="container text-left">
+      <mat-radio-group>
+        <h2 class="text-left text-secondary">Generation Options</h2>
+        <hr>
+        <mat-radio-button value="1">Generate Code</mat-radio-button><br>
+        <mat-radio-button value="2">Generate Code & Execute</mat-radio-button><br>
+      </mat-radio-group> 
+    </div>
+    <hr>
+    <form class="container" (ngSubmit)="submit()">
+    <div class="container text-left">
+      <mat-radio-group>
+        <h4 class="text-left text-info">Tables</h4>
+          <mat-radio-button (click)="tableRadioClick(index)" style="display: block" [value]="index" *ngFor="let t of tables; let index = index">
+          {{t.TABLE_NAME}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <hr>
+      <mat-form-field *ngIf="_schemaService.schemas.length !== 0; else progressbar">
+        <mat-select [(ngModel)]="proc.procSchema" [ngModelOptions]="{standalone: true}" placeholder="Schema">
+          <mat-option *ngFor="let s of _schemaService.schemas" [value]="s.TABLE_SCHEMA">
+            {{s.TABLE_SCHEMA}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-template #progressbar>
+        <div id="loading" class="container">
+          <h4 class="text-center text-primary">Loading schemas...</h4>
+          <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+        </div>
+      </ng-template>
+      <mat-form-field>
+        <input matInput [(ngModel)]="proc.prefix" [ngModelOptions]="{standalone: true}" type="text" placeholder="Prefix">
+      </mat-form-field>
       <hr>
-      <mat-radio-button value="1">Generate Code</mat-radio-button><br>
-      <mat-radio-button value="2">Generate Code & Execute</mat-radio-button><br>
-    </mat-radio-group> 
+      <mat-selection-list>
+        <h4 class="text-left text-info">Operations</h4>
+        <mat-list-option #optionOne (click)="methodsToCreate(0, optionOne)" class="option-center">Create Insert</mat-list-option>
+        <mat-list-option #optionTwo (click)="methodsToCreate(1, optionTwo)" class="option-center">Create Update</mat-list-option>
+        <mat-list-option #optionThree (click)="methodsToCreate(2, optionThree)" class="option-center">Create Delete</mat-list-option>
+      </mat-selection-list>
+      <hr>
+      <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>
+      <button (click)="submit()" class="text-primary" id="done" mat-raised-button>
+        Done
+      </button>
+    </form>
   </div>
-  <hr>
-  <form class="container">
-  <div class="container text-left">
-    <mat-radio-group>
-      <h4 class="text-left text-info">Tables</h4>
-        <mat-radio-button (click)="tableRadioClick(index)" style="display: block" [value]="index" *ngFor="let t of tables; let index = index">
-        {{t.TABLE_NAME}}
-      </mat-radio-button>
-    </mat-radio-group>
-  </div>
-  <hr>
-    <mat-form-field *ngIf="_schemaService.schemas.length !== 0; else progressbar">
-      <mat-select [(ngModel)]="proc.procSchema" [ngModelOptions]="{standalone: true}" placeholder="Schema">
-        <mat-option *ngFor="let s of _schemaService.schemas" [value]="s.TABLE_SCHEMA">
-          {{s.TABLE_SCHEMA}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <ng-template #progressbar>
-      <div id="loading" class="container">
-        <h4 class="text-center text-primary">Loading schemas...</h4>
-        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
-      </div>
-    </ng-template>
-    <mat-form-field>
-      <input matInput [(ngModel)]="proc.prefix" [ngModelOptions]="{standalone: true}" type="text" placeholder="Prefix">
-    </mat-form-field>
-    <hr>
-    <mat-selection-list>
-      <h4 class="text-left text-info">Operations</h4>
-      <mat-list-option #optionOne (click)="methodsToCreate(0, optionOne)" class="option-center">Create Insert</mat-list-option>
-      <mat-list-option #optionTwo (click)="methodsToCreate(1, optionTwo)" class="option-center">Create Update</mat-list-option>
-      <mat-list-option #optionThree (click)="methodsToCreate(2, optionThree)" class="option-center">Create Delete</mat-list-option>
-    </mat-selection-list>
-    <hr>
-    <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>
-    <button (click)="submit()" class="text-primary" id="done" mat-raised-button>
-      Done
-    </button>
-  </form>
-  <ng-template #creatingProc>
+  <ng-template style="margin-top: 10px" #creatingProc>
     <div id="loading" class="container">
       <h4 class="text-center text-primary">Creating {{_procService.building.proc}} proc...</h4>
       <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>

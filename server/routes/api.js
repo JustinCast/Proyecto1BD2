@@ -10,6 +10,7 @@ router.get("/getTableNames", queries.getTableNames);
 // procs
 router.post("/genInsert", queries.genInsert);
 // other
+router.post("/login", queries.login);
 router.get("/getPeople/:schema/:tablename", queries.getPeople);
 router.post("/insertPerson/:schema/:tablename", queries.insertPerson);
 

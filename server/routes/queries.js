@@ -101,11 +101,26 @@ async function genInsert(req, res, next) {
   }
 }
 
+async function login(req, res, next) {
+  try {
+    sql.close();
+    config.server = req.body.server;
+    config.port = req.body.port;
+    config.database = req.body.database;
+    config.user = req.body.user;
+    config.password = req.body.password;
+    await sql.connect(config);
+  } catch (error) {
+    res.status(500).send({message: `Ha ocurrido un error al conectar con la BD: ${err}`});
+  }
+}
+
 module.exports = {
   getSchemas: getSchemas,
   createSchema: createSchema,
   getTableNames: getTableNames,
   getPeople: getPeople,
   insertPerson: insertPerson,
-  genInsert: genInsert
+  genInsert: genInsert,
+  login: login,
 };
