@@ -8,19 +8,19 @@
     </mat-radio-group> 
   </div>
   <hr>
+  <form class="container">
   <div class="container text-left">
     <mat-radio-group>
       <h4 class="text-left text-info">Tables</h4>
-      <mat-radio-button style="display: block" [value]="index" *ngFor="let t of tables; let index = index">
+        <mat-radio-button (click)="tableRadioClick(index)" style="display: block" [value]="index" *ngFor="let t of tables; let index = index">
         {{t.TABLE_NAME}}
       </mat-radio-button>
     </mat-radio-group>
   </div>
   <hr>
-  <form class="container">
     <mat-form-field *ngIf="_schemaService.schemas.length !== 0; else progressbar">
-      <mat-select placeholder="Schema">
-        <mat-option *ngFor="let s of _schemaService.schemas">
+      <mat-select [(ngModel)]="proc.procSchema" [ngModelOptions]="{standalone: true}" placeholder="Schema">
+        <mat-option *ngFor="let s of _schemaService.schemas" [value]="s.TABLE_SCHEMA">
           {{s.TABLE_SCHEMA}}
         </mat-option>
       </mat-select>
@@ -32,7 +32,7 @@
       </div>
     </ng-template>
     <mat-form-field>
-      <input matInput type="text" placeholder="Prefix">
+      <input matInput [(ngModel)]="proc.prefix" [ngModelOptions]="{standalone: true}" type="text" placeholder="Prefix">
     </mat-form-field>
     <hr>
     <mat-selection-list>
@@ -41,8 +41,10 @@
       <mat-list-option class="option-center">Create Update</mat-list-option>
       <mat-list-option class="option-center">Create Delete</mat-list-option>
     </mat-selection-list>
+    <hr>
+    <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>
+    <button (click)="submit()" class="text-primary" id="done" mat-raised-button>
+      Done
+    </button>
   </form>
-  <hr>
-  <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>
-  <button class="text-primary" id="done" mat-raised-button (click)="dialogRef.close(true)">Done</button>
 </div>
