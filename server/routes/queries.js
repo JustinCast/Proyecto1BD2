@@ -32,6 +32,7 @@ async function createSchema(req, res, next) {
 
 async function getTableNames(req, res, next) {
   try {
+    sql.close();
     let pool = await sql.connect(config);
     let result = await pool.request().query("SELECT * FROM get_table_data");
     res.status(200).json(result.recordset);

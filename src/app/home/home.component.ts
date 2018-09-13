@@ -41,7 +41,6 @@ export class HomeComponent implements OnInit {
         1
       );
     }
-    console.log(this.selectedCheckboxes)
     this.manageDisabled();
   }
 
@@ -51,7 +50,7 @@ export class HomeComponent implements OnInit {
   }
 
   openExecDialog() {
-    this.execDialog.confirm().subscribe(result => {
+    this.execDialog.confirm(this.selectedTables).subscribe(result => {
       if (result) {
       }
       this.deSelectChecboxes();
@@ -60,6 +59,9 @@ export class HomeComponent implements OnInit {
   }
 
   deSelectChecboxes() {
-    this.selectedCheckboxes.forEach(c => c.checked = false);
+    this.selectedCheckboxes.forEach(c => {
+      this.selectOrDeselectTable(c, this.selectedCheckboxes.findIndex(ch => ch === c));
+      c.checked = false
+    });
   }
 }

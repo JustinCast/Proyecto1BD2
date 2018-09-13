@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Table } from "../models/Table";
 import { List } from "linqts";
+import { TableInterface } from "../models/Table.interface";
 
 @Injectable({
   providedIn: "root"
@@ -12,10 +13,23 @@ export class TablesService {
   constructor(private _http: HttpClient) {}
 
   getTableNames() {
-    this._http.get<any>(`http://localhost:3000/api/v1/getTableNames`).subscribe(
+    this._http.get<TableInterface[]>(`http://localhost:3000/api/v1/getTableNames`).subscribe(
       data => {
-        this.tables = new List<Table>(data);
-        this.extractTables();
+        //this.tables = new List<Table>(data);
+        console.log(data)
+        data.forEach(element => {
+          if(this.extractedTables.find(t => t.TABLE_NAME === element.TABLE_NAME) !== undefined){
+            this.extractedTables.find(t => t.TABLE_NAME === element.TABLE_NAME).setColumnName(element.COLUMN_NAME)
+          }
+          else{
+            let table = new Table(element.TABLE_SCHEMA, element.TABLE_NAME);
+            table.setColumnName(element.COLUMN_NAME);
+            this.extractedTables.unshift(table);
+
+          }
+        });
+        console.log(this.extractedTables)
+        //this.extractTables();
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -32,18 +46,5 @@ export class TablesService {
         }
       }
     );
-  }
-
-  extractTables() {
-    this.tables = this.tables.GroupBy(t => t.TABLE_NAME, t => t.COLUMN_NAME);
-    for (var key in this.tables) {
-      if (this.tables.hasOwnProperty(key)) {
-        let table: Table = new Table(key);
-        this.tables[key].forEach(element => {
-          table.COLUMN_NAME.unshift(element);
-        });
-        this.extractedTables.unshift(table);
-      }
-    }
   }
 }
