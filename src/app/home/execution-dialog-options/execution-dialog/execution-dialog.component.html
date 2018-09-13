@@ -19,7 +19,7 @@
     <mat-form-field *ngIf="_schemaService.schemas.length !== 0; else progressbar">
       <mat-select placeholder="Schema">
         <mat-option *ngFor="let s of _schemaService.schemas">
-          {{s.name}}
+          {{s.TABLE_SCHEMA}}
         </mat-option>
       </mat-select>
     </mat-form-field>
