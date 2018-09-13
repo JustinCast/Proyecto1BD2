@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Table } from "../models/Table";
-import { List } from "linqts";
 import { TableInterface } from "../models/Table.interface";
 
 @Injectable({

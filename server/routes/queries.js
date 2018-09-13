@@ -10,7 +10,7 @@ async function getSchemas(req, res, next) {
   try {
     let pool = await sql.connect(config);
     let result = await pool.request().query("SELECT name FROM sys.schemas");
-    res.status(200).json({ result: result.recordset });
+    res.status(200).json(result.recordset);
     sql.close();
   } catch (err) {
     console.log(err);

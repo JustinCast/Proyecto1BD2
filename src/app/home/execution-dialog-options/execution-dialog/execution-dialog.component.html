@@ -16,6 +16,19 @@
   </mat-selection-list>
   <hr>
   <form class="container">
+    <mat-form-field *ngIf="_schemaService.schemas.length !== 0; else progressbar">
+      <mat-select placeholder="Schema">
+        <mat-option *ngFor="let s of _schemaService.schemas">
+          {{s.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ng-template #progressbar>
+      <div id="loading" class="container">
+        <h4 class="text-center text-primary">Loading schemas...</h4>
+        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+      </div>
+    </ng-template>
     <mat-form-field>
       <input matInput type="text" placeholder="Prefix">
     </mat-form-field>
