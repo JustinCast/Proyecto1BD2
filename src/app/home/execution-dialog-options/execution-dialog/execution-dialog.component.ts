@@ -11,11 +11,10 @@ export class ExecutionDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ExecutionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Array<Table>
+    @Inject(MAT_DIALOG_DATA) public tables: Array<Table>
   ) { }
 
   ngOnInit() {
-    console.log(this.data)
   }
 
 }

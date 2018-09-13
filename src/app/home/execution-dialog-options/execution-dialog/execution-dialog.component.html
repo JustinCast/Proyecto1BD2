@@ -8,6 +8,13 @@
     </mat-radio-group> 
   </div>
   <hr>
+  <mat-selection-list>
+    <h4 class="text-left text-info">Tables</h4>
+    <mat-list-option style="text-align: left" *ngFor="let t of tables">
+      {{t.TABLE_NAME}}
+    </mat-list-option>
+  </mat-selection-list>
+  <hr>
   <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>
   <button class="text-primary" id="done" mat-raised-button (click)="dialogRef.close(true)">Done</button>
 </div>

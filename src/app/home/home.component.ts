@@ -3,14 +3,12 @@ import { TablesService } from "../services/tables.service";
 import { ExecutionOptionsDialogService } from "./execution-dialog-options/execution-options-dialog.service";
 import { MatCheckbox, MatCheckboxChange } from "@angular/material";
 import { Table } from "../models/Table";
-import { speedDialFabAnimations } from "./speed-dial-fab-animations";
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  providers: [ExecutionOptionsDialogService],
-  animations: speedDialFabAnimations
+  providers: [ExecutionOptionsDialogService]
 })
 export class HomeComponent implements OnInit {
   disabled: boolean = true;
