@@ -37,9 +37,9 @@
     <hr>
     <mat-selection-list>
       <h4 class="text-left text-info">Operations</h4>
-      <mat-list-option class="option-center">Create Insert</mat-list-option>
-      <mat-list-option class="option-center">Create Update</mat-list-option>
-      <mat-list-option class="option-center">Create Delete</mat-list-option>
+      <mat-list-option #optionOne (click)="methodsToCreate(0, optionOne)" class="option-center">Create Insert</mat-list-option>
+      <mat-list-option #optionTwo (click)="methodsToCreate(1, optionTwo)" class="option-center">Create Update</mat-list-option>
+      <mat-list-option #optionThree (click)="methodsToCreate(2, optionThree)" class="option-center">Create Delete</mat-list-option>
     </mat-selection-list>
     <hr>
     <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>

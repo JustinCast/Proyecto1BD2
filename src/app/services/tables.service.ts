@@ -40,7 +40,6 @@ export class TablesService {
         let table = new Table(element.TABLE_SCHEMA, element.TABLE_NAME);
         table.setColumnName(element.COLUMN_NAME);
         this.extractedTables.unshift(table);
-
       }
     }); 
   }
