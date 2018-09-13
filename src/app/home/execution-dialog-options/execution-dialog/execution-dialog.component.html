@@ -15,6 +15,22 @@
     </mat-list-option>
   </mat-selection-list>
   <hr>
+  <form class="container">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Prefix">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Table Name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Operation">
+        <mat-option>Create Insert</mat-option>
+        <mat-option>Create Update</mat-option>
+        <mat-option>Create Delete</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <hr>
   <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>
   <button class="text-primary" id="done" mat-raised-button (click)="dialogRef.close(true)">Done</button>
 </div>

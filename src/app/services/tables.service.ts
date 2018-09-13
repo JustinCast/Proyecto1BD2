@@ -43,6 +43,6 @@ export class TablesService {
         this.extractedTables.unshift(table);
 
       }
-    });
+    }); 
   }
 }

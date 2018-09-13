@@ -10,7 +10,8 @@ export class ExecutionOptionsDialogService {
   public confirm(selectedTables: Array<Table>): Observable<boolean> {
     let dialogRef: MatDialogRef<ExecutionDialogComponent>;
     dialogRef = this.dialog.open(ExecutionDialogComponent, {
-      width: "35%",
+      width: "65%",
+      height: "50%",
       data: selectedTables
     });
 

@@ -20,7 +20,8 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this._tableService.getTableNames();
+    if(this._tableService.extractedTables.length === 0)
+      this._tableService.getTableNames();
   }
 
   selectOrDeselectTable(check: MatCheckbox, index: number) {
