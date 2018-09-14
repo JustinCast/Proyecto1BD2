@@ -12,7 +12,6 @@ export class SchemaService {
     this._http.get<string[]>(`http://localhost:3000/api/v1/getSchemas`).subscribe(
       data => {
         this.schemas = data;
-        console.log(data);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
