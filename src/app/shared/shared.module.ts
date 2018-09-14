@@ -8,7 +8,8 @@ import {
   MatListModule,
   MatRadioModule,
   MatInputModule,
-  MatSelectModule
+  MatSelectModule,
+  MatIconModule
  } from "@angular/material";
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import {
     MatListModule,
     MatInputModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatIconModule
   ],
   exports: [
     MatProgressBarModule,
@@ -30,7 +32,8 @@ import {
     MatListModule,
     MatInputModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatIconModule
   ],
   declarations: []
 })

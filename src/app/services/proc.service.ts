@@ -6,7 +6,7 @@ import { Procedure } from "../models/Procedure";
   providedIn: "root"
 })
 export class ProcService {
-  building = {insertState: false, updateState: false, deleteState: false };
+  building: boolean = false;
   constructor(private _http: HttpClient) {}
 
   genInsertProc(proc: Procedure) {
@@ -19,7 +19,7 @@ export class ProcService {
       })
       .subscribe(
         success => {
-          this.building.insertState = false;
+          this.building = false;
           console.log(success);
         },
         (err: HttpErrorResponse) => {
@@ -49,7 +49,7 @@ export class ProcService {
       })
       .subscribe(
         success => {
-          this.building.updateState = false;
+          this.building = false;
           console.log(success);
         },
         (err: HttpErrorResponse) => {
@@ -79,7 +79,7 @@ export class ProcService {
       })
       .subscribe(
         success => {
-          this.building.deleteState = false;
+          this.building = false;
           console.log(success);
         },
         (err: HttpErrorResponse) => {

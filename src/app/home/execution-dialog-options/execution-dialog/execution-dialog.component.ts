@@ -37,24 +37,6 @@ export class ExecutionDialogComponent implements OnInit {
   }
 
   submit() {
-    this.methods.forEach(m => {
-      switch (m) {
-        case 0:
-          this._procService.building.insertState = true;
-          this._procService.genInsertProc(this.proc);
-          break;
-        case 1:
-          this._procService.building.updateState = true;
-          this._procService.genUpdateProc(this.proc);
-          break;
-        case 2:
-          this._procService.building.deleteState = true;
-          this._procService.genDeleteProc(this.proc);
-          break;
-        default:
-          break;
-      }
-    });
     this.reset();
   }
 
@@ -69,10 +51,22 @@ export class ExecutionDialogComponent implements OnInit {
     this.uncheckOptions();
   }
 
-  methodsToCreate(method: number, option: MatListOption) {
-    if (!this.methods.includes(method)) {
-      this.methods.unshift(method);
-      this.options.unshift(option);
+  methodsToCreate(method: number) {
+    switch(method) {
+      case 0:
+        this._procService.building = true;
+        this._procService.genInsertProc(this.proc);
+        break;
+      case 1:
+        this._procService.building = true;
+        this._procService.genUpdateProc(this.proc);
+        break;
+      case 2:
+        this._procService.building = true;
+        this._procService.genDeleteProc(this.proc);
+        break;
+      default: break;
+
     }
   }
 
