@@ -46,9 +46,9 @@ export class ExecutionDialogComponent implements OnInit {
       1
     );
     this.proc = {};
-    console.log(this.options);
+    /*console.log(this.options);
     this.methods = [];
-    this.uncheckOptions();
+    this.uncheckOptions();*/
   }
 
   methodsToCreate(method: number) {

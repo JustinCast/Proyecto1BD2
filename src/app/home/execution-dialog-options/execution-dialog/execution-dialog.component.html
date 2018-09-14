@@ -70,9 +70,9 @@
         </mat-list-item>
       </mat-list>
       <hr>
-      <button mat-button color="warn" (click)="dialogRef.close(false)">Cancel</button>
+      <button mat-button (click)="dialogRef.close(true)"><mat-icon>keyboard_backspace</mat-icon></button>
       <button (click)="submit()" class="text-primary" id="done" mat-raised-button>
-        Done
+        <mat-icon>done_all</mat-icon>
       </button>
     </form>
   </div>
