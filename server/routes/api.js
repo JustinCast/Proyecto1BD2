@@ -9,6 +9,8 @@ router.post("/createSchema", queries.createSchema);
 router.get("/getTableNames", queries.getTableNames);
 // procs
 router.post("/genInsert", queries.genInsert);
+router.post("/genUpdate", queries.genUpdate);
+router.post("/genDelete", queries.genDelete);
 // other
 router.post("/login", queries.login);
 router.get("/getPeople/:schema/:tablename", queries.getPeople);

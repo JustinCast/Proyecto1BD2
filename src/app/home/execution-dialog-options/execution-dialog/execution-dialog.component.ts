@@ -1,14 +1,18 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatListOption } from '@angular/material';
-import { Table } from '../../../models/Table';
-import { SchemaService } from '../../../services/schema.service';
-import { Procedure } from '../../../models/Procedure';
-import { ProcService } from '../../../services/proc.service';
+import { Component, OnInit, Inject } from "@angular/core";
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatListOption
+} from "@angular/material";
+import { Table } from "../../../models/Table";
+import { SchemaService } from "../../../services/schema.service";
+import { Procedure } from "../../../models/Procedure";
+import { ProcService } from "../../../services/proc.service";
 
 @Component({
-  selector: 'app-execution-dialog',
-  templateUrl: './execution-dialog.component.html',
-  styleUrls: ['./execution-dialog.component.scss'],
+  selector: "app-execution-dialog",
+  templateUrl: "./execution-dialog.component.html",
+  styleUrls: ["./execution-dialog.component.scss"],
   providers: [SchemaService, ProcService]
 })
 export class ExecutionDialogComponent implements OnInit {
@@ -23,7 +27,7 @@ export class ExecutionDialogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if(this._schemaService.schemas.length === 0)
+    if (this._schemaService.schemas.length === 0)
       this._schemaService.getSchemas();
   }
 
@@ -34,24 +38,31 @@ export class ExecutionDialogComponent implements OnInit {
 
   submit() {
     this.methods.forEach(m => {
-      switch(m) {
+      switch (m) {
         case 0:
-          this._procService.building.proc = 'Insert';
-          this._procService.building.state = true;
+          this._procService.building.insertState = true;
           this._procService.genInsertProc(this.proc);
           break;
         case 1:
+          this._procService.building.updateState = true;
+          this._procService.genUpdateProc(this.proc);
           break;
         case 2:
+          this._procService.building.deleteState = true;
+          this._procService.genDeleteProc(this.proc);
           break;
-        default: break;
+        default:
+          break;
       }
     });
     this.reset();
   }
 
   reset() {
-    this.tables.splice(this.tables.findIndex(t => t.TABLE_NAME === this.proc.table), 1);
+    this.tables.splice(
+      this.tables.findIndex(t => t.TABLE_NAME === this.proc.table),
+      1
+    );
     this.proc = {};
     console.log(this.options);
     this.methods = [];
@@ -59,15 +70,14 @@ export class ExecutionDialogComponent implements OnInit {
   }
 
   methodsToCreate(method: number, option: MatListOption) {
-    if(!this.methods.includes(method)){
+    if (!this.methods.includes(method)) {
       this.methods.unshift(method);
       this.options.unshift(option);
     }
   }
 
   uncheckOptions() {
-    this.options.forEach(o => o.selected = false);
+    this.options.forEach(o => (o.selected = false));
     this.options = [];
   }
-
 }

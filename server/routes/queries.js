@@ -101,6 +101,40 @@ async function genInsert(req, res, next) {
   }
 }
 
+async function genUpdate(req, res, next) {
+  try {
+    sql.close();
+    let pool = await sql.connect(config);
+    let result2 = await pool
+      .request()
+      .input("prefix", sql.VarChar, req.body.prefix)
+      .input("table_name", sql.VarChar, req.body.table_name)
+      .input("table_schema", sql.VarChar, req.body.table_schema)
+      .input("proc_schema", sql.VarChar, req.body.proc_schema)
+      .execute("create_update_proc");
+    res.status(200).json(result2);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+async function genDelete(req, res, next) {
+  try {
+    sql.close();
+    let pool = await sql.connect(config);
+    let result2 = await pool
+      .request()
+      .input("prefix", sql.VarChar, req.body.prefix)
+      .input("table_name", sql.VarChar, req.body.table_name)
+      .input("table_schema", sql.VarChar, req.body.table_schema)
+      .input("proc_schema", sql.VarChar, req.body.proc_schema)
+      .execute("genDelete");
+    res.status(200).json(result2);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
 async function login(req, res, next) {
   try {
     sql.close();
@@ -122,5 +156,7 @@ module.exports = {
   getPeople: getPeople,
   insertPerson: insertPerson,
   genInsert: genInsert,
+  genUpdate: genUpdate,
+  genDelete: genDelete,
   login: login,
 };

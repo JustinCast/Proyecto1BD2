@@ -6,7 +6,7 @@ import { Procedure } from "../models/Procedure";
   providedIn: "root"
 })
 export class ProcService {
-  building = {proc: '', state: false}
+  building = {insertState: false, updateState: false, deleteState: false };
   constructor(private _http: HttpClient) {}
 
   genInsertProc(proc: Procedure) {
@@ -19,8 +19,7 @@ export class ProcService {
       })
       .subscribe(
         success => {
-          this.building.proc = '';
-          this.building.state = false;
+          this.building.insertState = false;
           console.log(success);
         },
         (err: HttpErrorResponse) => {
@@ -41,6 +40,62 @@ export class ProcService {
   }
 
   genUpdateProc(proc: Procedure) {
+    this._http
+      .post("http://localhost:3000/api/v1/genUpdate", {
+        prefix: proc.prefix,
+        table_name: proc.table,
+        table_schema: proc.tableSchema,
+        proc_schema: proc.procSchema
+      })
+      .subscribe(
+        success => {
+          this.building.updateState = false;
+          console.log(success);
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            // Error del lado del cliente
+            console.log("An error occurred:", err.error.message);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // Error del lado del backend
+            console.log(
+              `Backend returned code ${err.status}, body was: ${JSON.stringify(
+                err.error
+              )}`
+            );
+          }
+        }
+      );
+  }
 
+  genDeleteProc(proc: Procedure) {
+    this._http
+      .post("http://localhost:3000/api/v1/genDelete", {
+        prefix: proc.prefix,
+        table_name: proc.table,
+        table_schema: proc.tableSchema,
+        proc_schema: proc.procSchema
+      })
+      .subscribe(
+        success => {
+          this.building.deleteState = false;
+          console.log(success);
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            // Error del lado del cliente
+            console.log("An error occurred:", err.error.message);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // Error del lado del backend
+            console.log(
+              `Backend returned code ${err.status}, body was: ${JSON.stringify(
+                err.error
+              )}`
+            );
+          }
+        }
+      );
   }
 }

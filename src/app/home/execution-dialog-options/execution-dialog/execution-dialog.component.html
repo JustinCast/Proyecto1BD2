@@ -1,5 +1,5 @@
 <div id="main-dialog-container" style="overflow-y: scroll; margin: auto; text-align: center">
-  <div *ngIf="!_procService.building.state; else creatingProc" class="container">
+  <div *ngIf="!_procService.building.insertState || !_procService.building.updateState || !_procService.building.deleteState; else creatingProc" class="container">
     <div class="container text-left">
       <mat-radio-group>
         <h2 class="text-left text-secondary">Generation Options</h2>
@@ -49,9 +49,17 @@
       </button>
     </form>
   </div>
-  <ng-template style="margin-top: 10px" #creatingProc>
-    <div id="loading" class="container">
-      <h4 class="text-center text-primary">Creating {{_procService.building.proc}} proc...</h4>
+  <ng-template style="margin-top: 10%" #creatingProc>
+    <div *ngIf="_procService.building.insertState" id="loading" class="container">
+      <h4 class="text-center text-primary">Creating Insert proc...</h4>
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </div>
+    <div *ngIf="_procService.building.updateState" id="loading" class="container">
+      <h4 class="text-center text-primary">Creating Update proc...</h4>
+      <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+    </div>
+    <div *ngIf="_procService.building.deleteState" id="loading" class="container">
+      <h4 class="text-center text-primary">Creating Delete proc...</h4>
       <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
     </div>
   </ng-template>
