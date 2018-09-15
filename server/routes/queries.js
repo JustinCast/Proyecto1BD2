@@ -8,7 +8,7 @@ sql.on("err", err => {
 // schemas
 async function getSchemas(req, res, next) {
   try {
-    sql.close()
+    sql.close();
     let pool = await sql.connect(config);
     let result = await pool
       .request()
@@ -146,8 +146,11 @@ async function login(req, res, next) {
     config.user = req.body.user;
     config.password = req.body.password;
     await sql.connect(config);
+    res.status(200).json({ loggued: true });
   } catch (error) {
-    res.status(500).send({message: `Ha ocurrido un error al conectar con la BD: ${err}`});
+    res
+      .status(500)
+      .send({ message: `Ha ocurrido un error al conectar con la BD: ${err}` });
   }
 }
 
@@ -160,5 +163,5 @@ module.exports = {
   genInsert: genInsert,
   genUpdate: genUpdate,
   genDelete: genDelete,
-  login: login,
+  login: login
 };

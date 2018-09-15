@@ -1,21 +1,31 @@
-<form [formGroup]="loginFG" (ngSubmit) = "onSubmit()" class="card container" style="height: 84%; width: 27%">
-  <h1 style="margin: auto; margin-top: 20%;">Login</h1>
-  <div class="form-group">
-    <mat-form-field class="container">
-      <input matInput [formControl]="loginFG.get('server')" placeholder="Server" >
-    </mat-form-field>
-    <mat-form-field class="container">
-        <input matInput [formControl]="loginFG.get('port')" placeholder="Port">
+<div class="container">
+  <form [formGroup]="loginFG" (ngSubmit) = "onSubmit()" class="card shadow-lg p-3">
+    <h1 class="text-center text-info">Server Connection</h1>
+    <hr>
+    <div id="inputs-div" class="card shadow-sm p-3">
+      <mat-form-field class="container">
+        <input matInput [formControl]="loginFG.get('server')" placeholder="Server" >
       </mat-form-field>
-    <mat-form-field class="container">
-        <input matInput [formControl]="loginFG.get('database')" placeholder="Database">
+      <mat-form-field class="container">
+          <input matInput [formControl]="loginFG.get('port')" placeholder="Port">
+        </mat-form-field>
+      <mat-form-field class="container">
+          <input matInput [formControl]="loginFG.get('database')" placeholder="Database">
+        </mat-form-field>
+      <mat-form-field class="container">
+        <input matInput [formControl]="loginFG.get('user')" placeholder="User">
       </mat-form-field>
-    <mat-form-field class="container">
-      <input matInput [formControl]="loginFG.get('user')" placeholder="User">
-    </mat-form-field>
-    <mat-form-field class="container">
-      <input matInput [formControl]="loginFG.get('password')" type="password" placeholder="Password">
-    </mat-form-field>
-  </div>
-  <button mat-button [disabled]="!loginFG.valid" type="submit"  style="margin: auto;margin-bottom: 20%">Enter</button>
-</form>
+      <mat-form-field class="container">
+        <input matInput [formControl]="loginFG.get('password')" type="password" placeholder="Password">
+      </mat-form-field>
+    </div>
+    <hr>
+    <div class="text-center" style="margin-bottom: 0; padding-bottom: 0">
+      <button style="width: 95%" color="primary" mat-raised-button [disabled]="!loginFG.valid" type="submit">
+        <mat-icon>
+          {{icon}}
+        </mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

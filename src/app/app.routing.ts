@@ -5,8 +5,8 @@ import { LoginConnectionComponent } from "./login-connection/login-connection.co
 import { LogguedInGuard } from "./loggued-in.guard";
 
 export const ROUTES: Routes =  [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'login', component: LoginConnectionComponent },
     { path: 'home', component: HomeComponent, canActivate: [LogguedInGuard] },
-    { path: 'proc', component: CreateProcedureComponent }
+    { path: 'proc', component: CreateProcedureComponent },
+    { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
