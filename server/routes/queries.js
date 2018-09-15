@@ -8,6 +8,7 @@ sql.on("err", err => {
 // schemas
 async function getSchemas(req, res, next) {
   try {
+    sql.close()
     let pool = await sql.connect(config);
     let result = await pool
       .request()

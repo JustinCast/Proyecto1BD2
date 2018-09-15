@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Procedure } from "../models/Procedure";
+import { MatSnackBar } from "@angular/material";
 
 @Injectable({
   providedIn: "root"
 })
 export class ProcService {
   building: boolean = false;
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient, public snackBar: MatSnackBar) {}
 
   genInsertProc(proc: Procedure) {
     this._http
@@ -21,6 +22,7 @@ export class ProcService {
         success => {
           this.building = false;
           console.log(success);
+          this.openSnackBar('Insert proc created successfully', 'Ok');
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -51,6 +53,7 @@ export class ProcService {
         success => {
           this.building = false;
           console.log(success);
+          this.openSnackBar('Update proc created successfully', 'Ok');
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -81,6 +84,7 @@ export class ProcService {
         success => {
           this.building = false;
           console.log(success);
+          this.openSnackBar('Delete proc created successfully', 'Ok');
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -97,5 +101,11 @@ export class ProcService {
           }
         }
       );
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

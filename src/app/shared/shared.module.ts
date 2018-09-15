@@ -9,7 +9,8 @@ import {
   MatRadioModule,
   MatInputModule,
   MatSelectModule,
-  MatIconModule
+  MatIconModule,
+  MatSnackBarModule
  } from "@angular/material";
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import {
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   exports: [
     MatProgressBarModule,
@@ -33,7 +35,8 @@ import {
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   declarations: []
 })
