@@ -1,9 +1,9 @@
-<nav class="navbar navbar-dark bg-dark mb-5">
+<nav class="shadow navbar navbar-light bg-blue mb-5">
   <a class="navbar-brand" href="/">Proyecto1BD2</a>
   <div class="navbar-expand mr-auto">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">Home</a>
-      <a class="nav-item nav-link" href="#">Item</a>
+      <a [routerLink]="['/home']" class="nav-item nav-link active" routerLinkActive="active-link" href="#">Home</a>
+      <a [routerLink]="['/proc']" class="nav-item nav-link" href="#">Schemas</a>
     </div>
   </div>
   <div class="navbar-expand ml-auto navbar-nav">

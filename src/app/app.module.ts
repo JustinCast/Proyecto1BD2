@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { ExecutionDialogComponent } from './home/execution-dialog-options/execution-dialog/execution-dialog.component';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { LoginConnectionComponent } from './login-connection/login-connection.component';
+
 @NgModule({
   declarations: [
     AppComponent,
