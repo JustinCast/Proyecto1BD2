@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { ExecutionDialogComponent } from './home/execution-dialog-options/execution-dialog/execution-dialog.component';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { LoginConnectionComponent } from './login-connection/login-connection.component';
+import { AUTH_PROVIDERS } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { LoginConnectionComponent } from './login-connection/login-connection.co
   entryComponents: [
     ExecutionDialogComponent
   ],
-  providers: [],
+  providers: [AUTH_PROVIDERS,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,13 @@
 nav{
     border-radius: 20px;
-    margin: 0.5% 1.5% 0 1.5%
+    margin: 0.5% 1.5% 0 1.5%;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff
 }
 .active-link {
     color: indigo !important;
     font-weight: bold
+}
+a{
+    color: white
 }

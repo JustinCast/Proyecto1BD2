@@ -1,4 +1,4 @@
-<nav class="shadow navbar navbar-light bg-blue mb-5">
+<nav *ngIf="_auth.getUser()" class="shadow navbar text-white mb-5">
   <a class="navbar-brand" href="/">Proyecto1BD2</a>
   <div class="navbar-expand mr-auto">
     <div class="navbar-nav">
@@ -12,10 +12,9 @@
         <i class="fa fa-instagram"></i>
       </a>
       <a class="nav-item nav-link" href="/" target="_blank">
-        <i class="fa fax|-facebook"></i>
+        <i class="fa fa-facebook"></i>
       </a>
     </div>
   </div>
 </nav>
-<!--<router-outlet></router-outlet>-->
-<app-login-connection></app-login-connection>
+<router-outlet></router-outlet>

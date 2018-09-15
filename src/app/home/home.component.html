@@ -11,7 +11,7 @@
   </li>
 </ul>
 <div class="fab-container">
-  <button color="primary" [disabled]="disabled" mat-fab class="fab-toggler"
+  <button color="white" [disabled]="disabled" mat-fab class="fab-toggler"
           (click)="openExecDialog()">
     <i class="material-icons">done</i> <!-- Animation here -->
   </button>
@@ -21,6 +21,6 @@
 <ng-template #progressbar>
   <div id="loading" class="container">
     <h2 class="text-center text-primary">Loading</h2>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar style="background-color: white" mode="indeterminate"></mat-progress-bar>
   </div>
 </ng-template>
