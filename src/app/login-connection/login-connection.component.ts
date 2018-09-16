@@ -52,7 +52,6 @@ export class LoginConnectionComponent implements OnInit {
 
     this._auth.connectBD(login).subscribe(
       loggued => {
-        console.log(loggued);
         this._router.navigate(["/home"]);
         this._auth.login(
           new Login(
