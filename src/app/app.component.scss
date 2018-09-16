@@ -1,13 +1,15 @@
-nav{
-    border-radius: 20px;
-    margin: 0.5% 1.5% 0 1.5%;
-    background-color: rgba(255, 255, 255, 0.5);
-    color: #ffffff
+nav {
+  //border-radius: 20px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-weight: 500
 }
 .active-link {
-    color: indigo !important;
-    font-weight: bold
+  color: red !important;
+  font-weight: bold;
 }
-a{
-    color: white
+a {
+  color: white;
 }
