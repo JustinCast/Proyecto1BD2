@@ -4,6 +4,7 @@ import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Login } from "../models/Login";
+import { ProcService } from "../services/proc.service";
 
 @Component({
   selector: "app-login-connection",
@@ -17,7 +18,8 @@ export class LoginConnectionComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _auth: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _procService: ProcService
   ) {
     this.loginFG = this._fb.group({
       server: ["", Validators.required],
@@ -36,6 +38,7 @@ export class LoginConnectionComponent implements OnInit {
       if (this.loginFG.invalid == false) this.icon = "done";
       else this.icon = "priority_high";
     });
+    this._procService.checkIfProcsExist();
   }
 
   onSubmit() {

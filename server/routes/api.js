@@ -13,6 +13,7 @@ router.post("/genUpdate", queries.genUpdate);
 router.post("/genDelete", queries.genDelete);
 // other
 router.post("/login", queries.login);
+router.post("/checkIfProcsExist", queries.checkIfProcsExist);
 router.get("/getPeople/:schema/:tablename", queries.getPeople);
 router.post("/insertPerson/:schema/:tablename", queries.insertPerson);
 
