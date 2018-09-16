@@ -3,6 +3,7 @@ export class Login {
         public user?:string,
         public password?: string,
         public server?: string,
-        public database?: string
+        public database?: string,
+        public port?: number
     ){}
 }

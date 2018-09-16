@@ -150,7 +150,7 @@ async function login(req, res, next) {
   } catch (error) {
     res
       .status(500)
-      .send({ message: `Ha ocurrido un error al conectar con la BD: ${err}` });
+      .send({ message: `Ha ocurrido un error al conectar con la BD: ${error}` });
   }
 }
 

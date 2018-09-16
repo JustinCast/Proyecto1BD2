@@ -7,7 +7,7 @@
         <input matInput [formControl]="loginFG.get('server')" placeholder="Server" >
       </mat-form-field>
       <mat-form-field class="container">
-          <input matInput [formControl]="loginFG.get('port')" placeholder="Port">
+          <input type="number" matInput [formControl]="loginFG.get('port')" placeholder="Port">
         </mat-form-field>
       <mat-form-field class="container">
           <input matInput [formControl]="loginFG.get('database')" placeholder="Database">
