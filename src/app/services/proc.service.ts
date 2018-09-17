@@ -11,18 +11,19 @@ export class ProcService {
   constructor(private _http: HttpClient, public snackBar: MatSnackBar) {}
 
   genInsertProc(proc: Procedure) {
+    console.log(proc);
     this._http
       .post("http://localhost:3000/api/v1/genInsert", {
         prefix: proc.prefix,
         table_name: proc.table,
         table_schema: proc.tableSchema,
-        proc_schema: proc.procSchema
+        proc_schema: proc.procSchema,
+        action: proc.action
       })
       .subscribe(
         success => {
           this.building = false;
-          console.log(success);
-          this.openSnackBar('Insert proc created successfully', 'Ok');
+          this.openSnackBar(String(success), 'Ok', 5000);
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -47,13 +48,13 @@ export class ProcService {
         prefix: proc.prefix,
         table_name: proc.table,
         table_schema: proc.tableSchema,
-        proc_schema: proc.procSchema
+        proc_schema: proc.procSchema,
+        action: proc.action
       })
       .subscribe(
         success => {
           this.building = false;
-          console.log(success);
-          this.openSnackBar('Update proc created successfully', 'Ok');
+          this.openSnackBar(String(success), 'Ok', 5000);
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -78,13 +79,13 @@ export class ProcService {
         prefix: proc.prefix,
         table_name: proc.table,
         table_schema: proc.tableSchema,
-        proc_schema: proc.procSchema
+        proc_schema: proc.procSchema,
+        action: proc.action
       })
       .subscribe(
         success => {
           this.building = false;
-          console.log(success);
-          this.openSnackBar('Delete proc created successfully', 'Ok');
+          this.openSnackBar(String(success), 'Ok', 5000);
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -126,9 +127,9 @@ export class ProcService {
     )
   }
 
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action: string, duration: number) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: duration,
     });
   }
 }

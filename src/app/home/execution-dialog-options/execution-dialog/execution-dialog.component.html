@@ -4,8 +4,8 @@
       <mat-radio-group>
         <h2 class="text-left text-secondary">Generation Options</h2>
         <hr>
-        <mat-radio-button value="1">Generate Code</mat-radio-button><br>
-        <mat-radio-button value="2">Generate Code & Execute</mat-radio-button><br>
+        <mat-radio-button (click)="genType2()" [value]="0">Generate Code</mat-radio-button><br>
+        <mat-radio-button (click)="genType1()" [value]="1">Generate Code & Execute</mat-radio-button><br>
       </mat-radio-group> 
     </div>
     <hr>

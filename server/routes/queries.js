@@ -58,8 +58,9 @@ async function genInsert(req, res, next) {
       .input("table_name", sql.VarChar, req.body.table_name)
       .input("table_schema", sql.VarChar, req.body.table_schema)
       .input("proc_schema", sql.VarChar, req.body.proc_schema)
+      .input("action", sql.Int, req.body.action)
       .execute("genInsert");
-    res.status(200).json(result2);
+    res.status(200).json(result2.recordset[0][""]);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -75,8 +76,9 @@ async function genUpdate(req, res, next) {
       .input("table_name", sql.VarChar, req.body.table_name)
       .input("table_schema", sql.VarChar, req.body.table_schema)
       .input("proc_schema", sql.VarChar, req.body.proc_schema)
+      .input("action", sql.Int, req.body.action)
       .execute("genUpdate");
-    res.status(200).json(result2);
+    res.status(200).json(result2.recordset[0][""]);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -92,9 +94,10 @@ async function genDelete(req, res, next) {
       .input("table_name", sql.VarChar, req.body.table_name)
       .input("table_schema", sql.VarChar, req.body.table_schema)
       .input("proc_schema", sql.VarChar, req.body.proc_schema)
+      .input("action", sql.Int, req.body.action)
       .execute("genDelete");
 
-    res.status(200).json(result2);
+    res.status(200).json(result2.recordset[0][""]);
   } catch (error) {
     res.status(500).json(error);
   }

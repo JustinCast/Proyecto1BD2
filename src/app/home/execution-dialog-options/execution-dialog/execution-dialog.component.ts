@@ -28,6 +28,14 @@ export class ExecutionDialogComponent implements OnInit, OnDestroy {
     public _procService: ProcService
   ) {}
 
+  genType1() {
+    this.proc.action = 0
+  }
+
+  genType2() {
+    this.proc.action = 1
+  }
+
   ngOnInit() {
     this._schemaService.schemas = [];
     this._schemaService.getSchemas();
