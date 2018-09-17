@@ -3,7 +3,7 @@
   <div class="navbar-expand mr-auto">
     <div class="navbar-nav">
       <a [routerLink]="['/home']" class="nav-item nav-link active" routerLinkActive="active-link" href="#">Home</a>
-      <a [routerLink]="['/proc']" class="nav-item nav-link" href="#">Schemas</a>
+      <a class="nav-item nav-link" (click)="openCreateSchema()">Schemas</a>
     </div>
   </div>
   <button mat-raised-button [routerLink]="['/login']" (click)="_auth.logout()"><mat-icon>subdirectory_arrow_left</mat-icon></button>

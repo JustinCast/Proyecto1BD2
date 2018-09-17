@@ -27,7 +27,7 @@ async function createSchema(req, res, next) {
     let schema = req.body.schema;
     console.log(req.body.schema);
     let pool = await sql.connect(config);
-    let result = await pool.request().query("CREATE SCHEMA " + schema);
+    let result = await pool.request().query(`CREATE SCHEMA ${schema}`);
     res.status(201).json({ message: "Esquema creado correctamente" });
     sql.close();
   } catch (err) {

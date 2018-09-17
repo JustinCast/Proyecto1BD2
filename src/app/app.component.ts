@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { SchemaDialogService } from './home/create-schema-dialog/schema-dialog.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,14 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   constructor(
-    public _auth: AuthService
+    public _auth: AuthService,
+    private createSchemaDialogS: SchemaDialogService
   ){}
 
   ngOnInit(): void {
+  }
+
+  openCreateSchema() {
+    this.createSchemaDialogS.open();
   }
 }

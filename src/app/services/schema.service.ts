@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SchemaService {
   schemas: Array<any> = [];
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private snackBar: MatSnackBar) { }
 
   getSchemas() {
     this._http.get<string[]>(`http://localhost:3000/api/v1/getSchemas`).subscribe(
@@ -28,5 +29,20 @@ export class SchemaService {
         }
       }
     );
+  }
+
+  createSchema(schema: string) {
+    this._http.post(`http://localhost:3000/api/v1/createSchema`, schema)
+    .subscribe(
+      created => {
+        this.openSnackBar('Schema created successfully', 'Ok');
+      }
+    )
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }
