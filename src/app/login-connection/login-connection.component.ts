@@ -38,10 +38,10 @@ export class LoginConnectionComponent implements OnInit {
       if (this.loginFG.invalid == false) this.icon = "done";
       else this.icon = "priority_high";
     });
-    this._procService.checkIfProcsExist();
   }
 
   onSubmit() {
+    this._procService.checkIfProcsExist();
     let login = {
       server: this.loginFG.controls["server"].value,
       port: this.loginFG.controls["port"].value,

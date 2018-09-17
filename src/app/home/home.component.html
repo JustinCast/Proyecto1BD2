@@ -1,7 +1,7 @@
 <ul style="width: 100%" *ngIf="_tableService.extractedTables.length !== 0; else progressbar">
   <li class="card table shadow-sm p-3 mb-3 bg-white rounded text-center" *ngFor="let t of _tableService.extractedTables; let i = index">
     <ul id="header-ul">
-      <li class="header-li text-primary"><h3><span class="text-danger">{{t.TABLE_SCHEMA}}</span>.{{t.TABLE_NAME}}</h3></li>
+      <li class="header-li" style="color:purple"><h3><span class="text-danger">{{t.TABLE_SCHEMA}}</span>.{{t.TABLE_NAME}}</h3></li>
       <li style="margin-left: 50%" class="header-li"><mat-checkbox #check (click)="selectOrDeselectTable(check, i)"></mat-checkbox></li>
     </ul>
     <hr>

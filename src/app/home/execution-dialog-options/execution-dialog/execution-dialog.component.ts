@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
-  MatListOption
+  MatListOption,
+  MatRadioButton
 } from "@angular/material";
 import { Table } from "../../../models/Table";
 import { SchemaService } from "../../../services/schema.service";
@@ -15,10 +16,11 @@ import { ProcService } from "../../../services/proc.service";
   styleUrls: ["./execution-dialog.component.scss"],
   providers: [SchemaService, ProcService]
 })
-export class ExecutionDialogComponent implements OnInit {
+export class ExecutionDialogComponent implements OnInit, OnDestroy {
   proc: Procedure = {};
   methods: Array<number> = [];
   options: Array<MatListOption> = [];
+  selectedRadio: number;
   constructor(
     public dialogRef: MatDialogRef<ExecutionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public tables: Array<Table>,
@@ -31,7 +33,8 @@ export class ExecutionDialogComponent implements OnInit {
       this._schemaService.getSchemas();
   }
 
-  tableRadioClick(index: number) {
+  tableRadioClick(index: number, radio: MatRadioButton) {
+    this.selectedRadio = radio.value;
     this.proc.tableSchema = this.tables[index].TABLE_SCHEMA;
     this.proc.table = this.tables[index].TABLE_NAME;
   }
@@ -41,14 +44,11 @@ export class ExecutionDialogComponent implements OnInit {
   }
 
   reset() {
-    this.tables.splice(
-      this.tables.findIndex(t => t.TABLE_NAME === this.proc.table),
-      1
-    );
+    this.tables.splice(this.selectedRadio, 1);
     this.proc = {};
-    /*console.log(this.options);
+    console.log(this.options);
     this.methods = [];
-    this.uncheckOptions();*/
+    this.uncheckOptions();
   }
 
   methodsToCreate(method: number) {
@@ -68,6 +68,10 @@ export class ExecutionDialogComponent implements OnInit {
       default: break;
 
     }
+  }
+
+  ngOnDestroy(): void {
+    this.tables = [];
   }
 
   uncheckOptions() {

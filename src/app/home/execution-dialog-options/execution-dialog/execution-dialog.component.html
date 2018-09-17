@@ -13,7 +13,7 @@
     <div class="container text-left">
       <mat-radio-group>
         <h4 class="text-left text-info">Tables</h4>
-          <mat-radio-button (click)="tableRadioClick(index)" style="display: block" [value]="index" *ngFor="let t of tables; let index = index">
+          <mat-radio-button #radio (click)="tableRadioClick(i, radio)" style="display: block" [value]="i" *ngFor="let t of tables; let i = index">
           {{t.TABLE_NAME}}
         </mat-radio-button>
       </mat-radio-group>
@@ -71,7 +71,7 @@
       </mat-list>
       <hr>
       <button mat-button (click)="dialogRef.close(true)"><mat-icon>keyboard_backspace</mat-icon></button>
-      <button (click)="submit()" class="text-primary" id="done" mat-raised-button>
+      <button (click)="submit(); false" class="text-primary" id="done" mat-raised-button>
         <mat-icon>done_all</mat-icon>
       </button>
     </form>

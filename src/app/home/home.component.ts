@@ -52,14 +52,13 @@ export class HomeComponent implements OnInit {
     this.execDialog.confirm(this.selectedTables).subscribe(result => {
       if (result) {
       }
-      this.deSelectChecboxes();
       this.manageDisabled();
+      this.deSelectChecboxes();
     });
   }
 
   deSelectChecboxes() {
     this.selectedCheckboxes.forEach(c => {
-      this.selectOrDeselectTable(c, this.selectedCheckboxes.findIndex(ch => ch === c));
       c.checked = false
     });
   }
