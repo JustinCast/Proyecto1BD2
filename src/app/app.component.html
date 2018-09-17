@@ -6,6 +6,6 @@
       <a [routerLink]="['/proc']" class="nav-item nav-link" href="#">Schemas</a>
     </div>
   </div>
-  <button mat-raised-button><mat-icon>subdirectory_arrow_left</mat-icon></button>
+  <button mat-raised-button [routerLink]="['/login']" (click)="_auth.logout()"><mat-icon>subdirectory_arrow_left</mat-icon></button>
 </nav>
 <router-outlet></router-outlet>
