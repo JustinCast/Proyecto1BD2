@@ -141,6 +141,7 @@ async function login(req, res, next) {
     sql.close();
     config.server = req.body.server;
     config.database = req.body.database;
+    config.port = req.body.port;
     config.user = req.body.user;
     config.password = req.body.password;
     await sql.connect(config);
