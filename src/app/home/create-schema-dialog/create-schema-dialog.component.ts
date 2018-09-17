@@ -8,7 +8,6 @@ import { SchemaService } from "../../services/schema.service";
   styleUrls: ["./create-schema-dialog.component.scss"]
 })
 export class CreateSchemaDialogComponent implements OnInit {
-  schema = '';
   constructor(
     public dialogRef: MatDialogRef<CreateSchemaDialogComponent>,
     private schemaService: SchemaService
@@ -16,7 +15,9 @@ export class CreateSchemaDialogComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSubmit() {
-    this.schemaService.createSchema(this.schema);
+  onSubmit(schema: string) {
+    console.log(schema);
+    this.schemaService.loading = true;
+    this.schemaService.createSchema(schema);
   }
 }

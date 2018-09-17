@@ -29,8 +29,8 @@ export class ExecutionDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this._schemaService.schemas.length === 0)
-      this._schemaService.getSchemas();
+    this._schemaService.schemas = [];
+    this._schemaService.getSchemas();
   }
 
   tableRadioClick(index: number, radio: MatRadioButton) {

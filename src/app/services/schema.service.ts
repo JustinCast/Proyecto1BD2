@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class SchemaService {
   schemas: Array<any> = [];
+  loading: boolean = false;
   constructor(private _http: HttpClient, private snackBar: MatSnackBar) { }
 
   getSchemas() {
@@ -32,10 +33,11 @@ export class SchemaService {
   }
 
   createSchema(schema: string) {
-    this._http.post(`http://localhost:3000/api/v1/createSchema`, schema)
+    this._http.post(`http://localhost:3000/api/v1/createSchema`, {schema: schema})
     .subscribe(
       created => {
         this.openSnackBar('Schema created successfully', 'Ok');
+        this.loading = false;
       }
     )
   }

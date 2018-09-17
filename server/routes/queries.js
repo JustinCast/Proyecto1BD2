@@ -13,7 +13,7 @@ async function getSchemas(req, res, next) {
     let result = await pool
       .request()
       .query(
-        "SELECT TABLE_SCHEMA FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA != 'sys' GROUP BY TABLE_SCHEMA"
+        "SELECT NAME as TABLE_SCHEMA FROM sys.schemas"
       );
     res.status(200).json(result.recordset);
     sql.close();
@@ -24,10 +24,11 @@ async function getSchemas(req, res, next) {
 
 async function createSchema(req, res, next) {
   try {
-    let schema = req.body.schema;
-    console.log(req.body.schema);
+    console.log(req.body)
     let pool = await sql.connect(config);
-    let result = await pool.request().query(`CREATE SCHEMA ${schema}`);
+    await pool.request()
+    .input("name", sql.VarChar, req.body.schema)
+    .execute(`createScheme`);
     res.status(201).json({ message: "Esquema creado correctamente" });
     sql.close();
   } catch (err) {
@@ -41,43 +42,6 @@ async function getTableNames(req, res, next) {
     let pool = await sql.connect(config);
     let result = await pool.request().query("SELECT * FROM get_table_data");
     res.status(200).json(result.recordset);
-    sql.close();
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function getPeople(req, res, next) {
-  try {
-    let pool = await sql.connect(config);
-    let tableName = req.params.tablename;
-    let schema = req.params.schema;
-    let result = await pool
-      .request()
-      .query(`SELECT * FROM ${schema}.${tableName}`);
-    res.status(200).json({ people: result });
-    sql.close();
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function insertPerson(req, res, next) {
-  try {
-    let pool = await sql.connect(config);
-    let schema = req.params.schema;
-    let tableName = req.params.tablename;
-    await pool
-      .request()
-      .input("dni", sql.Int, req.body.dni)
-      .input("name", sql.VarChar(30), req.body.name)
-      .input("surname", sql.VarChar(30), req.body.surname)
-      .input("second_surname", sql.VarChar(30), req.body.secondSurname)
-      .query(
-        `INSERT INTO ${schema}.${tableName} (dni, name, surname, second_surname) 
-        VALUES(@dni, @name, @surname, @second_surname)`
-      );
-    res.status(201).json({ message: "Persona insertada con éxito" });
     sql.close();
   } catch (err) {
     console.log(err);
@@ -160,7 +124,8 @@ async function checkIfProcsExist(req, res, next) {
         @prefix VARCHAR (30),
         @table_name VARCHAR (50),
         @table_schema VARCHAR (30),
-        @proc_schema VARCHAR (30)
+        @proc_schema VARCHAR (30),
+        @action INT
     )
     AS
     DECLARE
@@ -208,10 +173,13 @@ async function checkIfProcsExist(req, res, next) {
         set @sql= @sql + @params + ' AS BEGIN INSERT INTO '
         set @sql= @sql + @table_schema + '.' + @table_name + @columns_list + ' values' + @params_list + '; END'
     
-        EXECUTE sp_executesql @sql
-        
-        PRINT @sql
-    END`;
+        IF @action = 0
+          BEGIN
+            EXECUTE sp_executesql @sql
+          END
+    
+        SELECT @sql
+    END;`;
     sql.close();
     let pool = await sql.connect(config);
     let request = await pool.request();
@@ -223,22 +191,23 @@ async function checkIfProcsExist(req, res, next) {
       @prefix VARCHAR (30),
       @table_name VARCHAR (50),
       @table_schema VARCHAR (30),
-      @proc_schema VARCHAR (30)
+      @proc_schema VARCHAR (30),
+      @action INT
   )
   AS
   DECLARE
       @sql NVARCHAR (2000), --Query para ejecutar.
-      @parametros VARCHAR(500), --    
+      @parametros VARCHAR(500), --
       @valores_modificar VARCHAR(500), --Columnas de la tabla.
       @atributo VARCHAR(30),
       @tipo_datos VARCHAR(30),
       @size VARCHAR(30),
       @columna_key varchar(30)
-  DECLARE cursor_cols CURSOR FOR 
+  DECLARE cursor_cols CURSOR FOR
       SELECT COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS
       WHERE TABLE_SCHEMA= @table_schema AND TABLE_NAME = LOWER(@table_name)
-  DECLARE cursor_key CURSOR FOR 
-      SELECT kcu.COLUMN_NAME 
+  DECLARE cursor_key CURSOR FOR
+      SELECT kcu.COLUMN_NAME
           FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc INNER JOIN  INFORMATION_SCHEMA.KEY_COLUMN_USAGE kcu
           ON (kcu.CONSTRAINT_NAME=tc.CONSTRAINT_NAME)
       WHERE tc.TABLE_SCHEMA= @table_schema AND tc.TABLE_NAME= @table_name AND tc.CONSTRAINT_TYPE= 'PRIMARY KEY'
@@ -266,18 +235,23 @@ async function checkIfProcsExist(req, res, next) {
               SET @valores_modificar=@valores_modificar+@atributo+' = @'+@atributo+', '
               FETCH NEXT FROM cursor_cols
               INTO @atributo , @tipo_datos, @size
-          END 
+          END
       SET @parametros=SUBSTRING(@parametros,0,LEN(@parametros))+')'
       SET @valores_modificar=SUBSTRING(@valores_modificar,0,LEN(@valores_modificar))
       CLOSE cursor_cols
-      DEALLOCATE cursor_cols; 
-          SET @sql=@sql+@parametros + ' AS BEGIN  UPDATE ' 
-          SET @sql= @sql + @table_schema + '.' + @table_name + ' ' + @valores_modificar + ' WHERE ' + @columna_key + '=@' + @columna_key + '; END;'
+      DEALLOCATE cursor_cols;
+      SET @sql=@sql+@parametros + ' AS BEGIN  UPDATE '
+      SET @sql= @sql + @table_schema + '.' + @table_name + ' ' + @valores_modificar + ' WHERE ' + @columna_key + '=@' + @columna_key + '; END;'
+  
+      IF @action = 0
+        BEGIN
           EXECUTE sp_executesql @sql
-        PRINT @sql
+        END
+  
+      SELECT @sql
       CLOSE cursor_key
-      DEALLOCATE cursor_key;    
-      END`;
+      DEALLOCATE cursor_key;
+  END;`;
     request = await pool.request();
     request.batch(`${updateBody}`, (err, result) => {
       if (err) console.log(err);
@@ -288,7 +262,8 @@ async function checkIfProcsExist(req, res, next) {
         @prefix VARCHAR (30),
         @table_name VARCHAR (50),
         @table_schema VARCHAR (30),
-        @proc_schema VARCHAR (30)
+        @proc_schema VARCHAR (30),
+        @action INT
     )
     AS
     DECLARE
@@ -302,14 +277,14 @@ async function checkIfProcsExist(req, res, next) {
     DECLARE c_columnas CURSOR FOR
         SELECT c.DATA_TYPE, c.CHARACTER_MAXIMUM_LENGTH,kcu.COLUMN_NAME
         FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS tc, INFORMATION_SCHEMA.COLUMNS AS c, INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS kcu
-        WHERE kcu.CONSTRAINT_NAME=tc.CONSTRAINT_NAME AND tc.TABLE_SCHEMA= @table_schema AND tc.TABLE_NAME= @table_name AND tc.CONSTRAINT_TYPE= 'PRIMARY KEY' AND 
+        WHERE kcu.CONSTRAINT_NAME=tc.CONSTRAINT_NAME AND tc.TABLE_SCHEMA= @table_schema AND tc.TABLE_NAME= @table_name AND tc.CONSTRAINT_TYPE= 'PRIMARY KEY' AND
         kcu.COLUMN_NAME =c.COLUMN_NAME;
-    BEGIN 
-        
+    BEGIN
+    
         SET @sql='CREATE PROCEDURE '+ @proc_schema + '.' + @prefix + '_eliminar_' + @table_name
         OPEN c_columnas
         FETCH NEXT FROM c_columnas
-        INTO @data_type,@length,@column
+        INTO @data_type, @length,@column
         SET @params =' '
         IF @length IS NULL --Si no es un varchar.
             BEGIN
@@ -321,12 +296,15 @@ async function checkIfProcsExist(req, res, next) {
             END
       SET @params = @params + ' AS BEGIN DELETE FROM ' + @table_schema + '.' + @table_name + ' WHERE ' + @column + ' = @' + @column + '; END;'
         SET @sql = @sql+' ' + @params
-      EXECUTE sp_executesql @sql
-        print @sql
-        CLOSE c_columnas
-        DEALLOCATE c_columnas;
-        
-    END`;
+      IF @action = 0
+        BEGIN
+          EXECUTE sp_executesql @sql
+        END
+    
+      SELECT @sql
+      CLOSE c_columnas
+      DEALLOCATE c_columnas;
+    END;`;
     request = await pool.request();
     request.batch(`${deleteBody}`, (err, result) => {
       if (err) console.log(err);
@@ -335,16 +313,13 @@ async function checkIfProcsExist(req, res, next) {
   } catch (error) {}
 }
 
-
 module.exports = {
   getSchemas: getSchemas,
   createSchema: createSchema,
   getTableNames: getTableNames,
-  getPeople: getPeople,
-  insertPerson: insertPerson,
   genInsert: genInsert,
   genUpdate: genUpdate,
   genDelete: genDelete,
   login: login,
-  checkIfProcsExist: checkIfProcsExist,
+  checkIfProcsExist: checkIfProcsExist
 };
